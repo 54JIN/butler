@@ -1,3 +1,6 @@
+//Development
+const cors = require("cors");
+
 const express = require('express');
 require('./db/mongoose')
 
@@ -7,6 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+//Development
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello from the server!');
