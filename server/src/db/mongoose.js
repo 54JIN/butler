@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://mongodb:27017/new-docker-db", {
+//Docker
+//"mongodb://mongodb:27017/new-docker-db"
+
+//Local
+//"mongodb://127.0.0.1/butler-manager-api"
+
+mongoose.connect("mongodb://mongodb:27017/butler-docker-db", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

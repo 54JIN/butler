@@ -1,8 +1,11 @@
 "use client";
 
+const axios = require("axios");
+
 //Libraries
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 //Images
 import logo from "../Assets/Images/logo.png";
@@ -23,10 +26,34 @@ export default function SignIn() {
     }));
   };
 
-  const clickHandler = () => {
-    if(formData.email === "admin@email.com" && formData.password === "admin101") {
-      router.push('/designer-dashboard');
+  const clickHandlerLogIn = async () => {
+    try {
+      // Sending POST request with form data
+      const response = await axios.post("http://localhost:5000/users/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Handle success (you can navigate to a different page after successful signup)
+      console.log("User Logged In:", response.data);
+      router.push("/suggestions"); // Optional: Redirect to a new page (e.g., a welcome page)
+    } catch (e) {
+      const error = e as AxiosError;
+      // Handle error with type assertion
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error Logging in user:",
+          error.response ? error.response.data : error.message
+        );
+      } else {
+        // In case the error is not an AxiosError, handle it differently
+        console.error("Unknown error:", error);
+      }
     }
+  };
+  
+  const clickHandlerCreateAccount = async () => {
+      router.push("/signup"); 
   };
 
   return (
@@ -99,12 +126,12 @@ export default function SignIn() {
             </div>
           </div>
           <div className="flex border-t-[2px] border-[rgba(238,238,238,0.8)]">
-            <button className="btn bg-[#485424] text-white w-full mt-5" onClick={clickHandler}>
+            <button className="btn bg-[#485424] text-white w-full mt-5" onClick={clickHandlerLogIn}>
               Sign In
             </button>
           </div>
           <div className="flex border-t-[2px] border-[rgba(238,238,238,0.8)]">
-            <button className="btn btn-outline btn-default w-full mt-5">
+            <button className="btn btn-outline btn-default w-full mt-5" onClick={clickHandlerCreateAccount}>
               Create an account
             </button>
           </div>

@@ -31,7 +31,7 @@ export default function SignUp() {
     }));
   };
 
-  const clickHandler = async () => {
+  const clickHandlerSignUp = async () => {
     try {
       // Sending POST request with form data
       const response = await axios.post("http://localhost:5000/users", {
@@ -42,7 +42,7 @@ export default function SignUp() {
 
       // Handle success (you can navigate to a different page after successful signup)
       console.log("User created successfully:", response.data);
-      router.push("/"); // Optional: Redirect to a new page (e.g., a welcome page)
+      router.push("/suggestions"); // Optional: Redirect to a new page (e.g., a welcome page)
     } catch (e) {
       const error = e as AxiosError;
       // Handle error with type assertion
@@ -56,6 +56,10 @@ export default function SignUp() {
         console.error("Unknown error:", error);
       }
     }
+  };
+
+  const clickHandlerAlreadyHaveAccount = async () => {
+    router.push("/signin");
   };
 
   return (
@@ -164,13 +168,13 @@ export default function SignUp() {
           <div className="flex border-t-[2px] border-[rgba(238,238,238,0.8)]">
             <button
               className="btn bg-[#485424] text-white w-full mt-5"
-              onClick={clickHandler}
+              onClick={clickHandlerSignUp}
             >
               Sign Up
             </button>
           </div>
           <div className="flex border-t-[2px] border-[rgba(238,238,238,0.8)]">
-            <button className="btn btn-outline btn-default w-full mt-5">
+            <button className="btn btn-outline btn-default w-full mt-5" onClick={clickHandlerAlreadyHaveAccount}>
               Already have an account?
             </button>
           </div>

@@ -1,31 +1,21 @@
-//Development
+//Development CORS configuration
 const cors = require("cors");
 
-const express = require('express');
-require('./db/mongoose')
-
-const User = require('./models/user')
+const express = require("express");
+require("./db/mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-//Development
+//Development Configuration with express app
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hello from the server!');
-});
+//Routers
+const userRouter = require('./routers/user')
 
-app.post('/users', (req, res) => {
-    const user = new User(req.body)
-
-    user.save().then(() => {
-        res.status(201).send(user)
-    }).catch((e) => {
-        res.status(400).send(e)
-    })
-})
+//Router Configurations
+app.use(userRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
