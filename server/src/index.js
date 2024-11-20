@@ -13,9 +13,11 @@ app.use(cors());
 
 //Routers
 const userRouter = require('./routers/user')
+const plumberRouter = require('./routers/plumber')
 
 //Router Configurations
 app.use(userRouter)
+app.use(plumberRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

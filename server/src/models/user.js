@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Plumber = require("./plumber");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -49,6 +50,14 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+}, {
+  timestamps: true
+});
+
+userSchema.virtual("plumber", {
+  ref: "Plumber",
+  localField: "_id",
+  foreignField: "owner",
 });
 
 userSchema.methods.toJSON = function () {
@@ -97,6 +106,13 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+
+//Delete user plumber when user is removed
+userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
+  const user = this
+  await Plumber.deleteMany({ owner: user._id })
+  next()
+})
 
 const User = mongoose.model("User", userSchema);
 

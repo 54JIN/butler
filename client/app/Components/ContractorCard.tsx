@@ -5,8 +5,18 @@ import Image from "next/image";
 import profilepic from "../Assets/Images/profilepic.jpg";
 import starpic from "../Assets/Images/star.svg";
 
+interface ContractorData {
+  firstName: string;
+  lastName: string;
+  rating: number;
+  jobsCompleted: number;
+  realtedJobsCompleted: number;
+  badges: string[];
+  aboutMe: string;
+}
+
 interface ContractorCardProps {
-  contractorData: {}
+  contractorData: ContractorData;
 }
 
 export default function ContractorCard({ contractorData }: ContractorCardProps) {
