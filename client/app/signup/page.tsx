@@ -16,7 +16,8 @@ export default function SignUp() {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -35,14 +36,15 @@ export default function SignUp() {
     try {
       // Sending POST request with form data
       const response = await axios.post("http://localhost:5000/users", {
-        name: formData.name,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
       });
 
       // Handle success (you can navigate to a different page after successful signup)
       console.log("User created successfully:", response.data);
-      router.push("/suggestions"); // Optional: Redirect to a new page (e.g., a welcome page)
+      router.push("/dashboard"); // Optional: Redirect to a new page (e.g., a welcome page)
     } catch (e) {
       const error = e as AxiosError;
       // Handle error with type assertion
@@ -81,14 +83,27 @@ export default function SignUp() {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <p className="text-md text-[rgb(140,140,140)]">Name</p>
+              <p className="text-md text-[rgb(140,140,140)]">First Name</p>
               <label className="input input-bordered rounded-xl flex items-center gap-2">
                 <input
                   type="text"
                   className="grow text-md"
-                  placeholder="john doe"
-                  name="name"
-                  value={formData.name}
+                  placeholder="john"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-md text-[rgb(140,140,140)]">Last Name</p>
+              <label className="input input-bordered rounded-xl flex items-center gap-2">
+                <input
+                  type="text"
+                  className="grow text-md"
+                  placeholder="doe"
+                  name="lastName"
+                  value={formData.lastName}
                   onChange={handleChange}
                 />
               </label>

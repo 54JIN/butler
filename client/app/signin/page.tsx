@@ -36,7 +36,7 @@ export default function SignIn() {
 
       // Handle success (you can navigate to a different page after successful signup)
       console.log("User Logged In:", response.data);
-      router.push("/suggestions"); // Optional: Redirect to a new page (e.g., a welcome page)
+      router.push("/dashboard"); // Optional: Redirect to a new page (e.g., a welcome page)
     } catch (e) {
       const error = e as AxiosError;
       // Handle error with type assertion

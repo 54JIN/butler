@@ -6,13 +6,16 @@ import profilepic from "../Assets/Images/profilepic.jpg";
 import starpic from "../Assets/Images/star.svg";
 
 interface ContractorData {
-  firstName: string;
-  lastName: string;
+  owner: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+  };
+  hourlyCharge: string;
   rating: number;
   jobsCompleted: number;
-  realtedJobsCompleted: number;
   badges: string[];
-  aboutMe: string;
+  description: string;
 }
 
 interface ContractorCardProps {
@@ -30,8 +33,8 @@ export default function ContractorCard({ contractorData }: ContractorCardProps) 
         />
         <div className="flex flex-col w-full">
           <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">{contractorData.firstName} {contractorData.lastName}</h3>
-            <h3 className="text-xl font-semibold">25/hr</h3>
+            <h3 className="text-xl font-semibold">{contractorData.owner.firstName} {contractorData.owner.lastName}</h3>
+            <h3 className="text-xl font-semibold">{contractorData.hourlyCharge}</h3>
           </div>
           <div className="flex items-center gap-1">
             <Image
@@ -42,7 +45,6 @@ export default function ContractorCard({ contractorData }: ContractorCardProps) 
             <p className="text-md">{contractorData.rating} Rating</p>
           </div>
           <p className="text-md">{contractorData.jobsCompleted} Jobs Completed</p>
-          <p className="text-md">{contractorData.realtedJobsCompleted} Jobs Completed</p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-5">
@@ -53,9 +55,9 @@ export default function ContractorCard({ contractorData }: ContractorCardProps) 
         })}
       </div>
       <p className="text-md">
-        {contractorData.aboutMe}
+        {contractorData.description}
       </p>
-      <button className="btn ">Select</button>
+      <button className="btn btn-primary">Select</button>
     </div>
   );
 }

@@ -24,6 +24,22 @@ const plumberSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    rating: {
+        type: Number,
+        default: 0,
+        validate(value) {
+            if(value < 0) {
+                throw new Error("Rating cannot be negative.")
+            }
+            else if(value > 5) {
+                throw new Error("Rating cannot be greater than five.")
+            }
+        }
+    },
+    badges: [{
+        type: String,
+        enum: ['Speedy Responder', 'Top Value']
+    }],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

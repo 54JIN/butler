@@ -3,9 +3,15 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Plumber = require("./plumber");
+const Electrician = require("./electrician");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
     type: String,
     required: true,
     trim: true,
@@ -63,6 +69,12 @@ userSchema.virtual("plumber", {
   foreignField: "owner",
 });
 
+userSchema.virtual("electrician", {
+  ref: "Electrician",
+  localField: "_id",
+  foreignField: "owner",
+});
+
 userSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
@@ -111,10 +123,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-//Delete user plumber when user is removed
+//Delete user plumber & electrician when user is removed
 userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
   const user = this
   await Plumber.deleteMany({ owner: user._id })
+  await Electrician.deleteMany({ owner: user._id })
   next()
 })
 

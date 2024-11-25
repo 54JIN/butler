@@ -68,7 +68,7 @@ export default function FilterSideBar() {
         <h3 className="font-bold">Price</h3>
         <div>
           <input
-            className="range"
+            className="range range-secondary"
             type="range"
             min={0}
             max={100}
@@ -91,15 +91,15 @@ export default function FilterSideBar() {
         <div className="form-control">
           <label className="label cursor-pointer">
             <span className="label-text">Verified</span>
-            <input type="checkbox" defaultChecked className="checkbox" />
+            <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
           </label>
           <label className="label cursor-pointer">
             <span className="label-text">Fast Responder</span>
-            <input type="checkbox" defaultChecked className="checkbox" />
+            <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
           </label>
           <label className="label cursor-pointer">
             <span className="label-text">Great Value</span>
-            <input type="checkbox" defaultChecked className="checkbox" />
+            <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
           </label>
         </div>
       </div>

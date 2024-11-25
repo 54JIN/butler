@@ -7,9 +7,27 @@ import HeaderHamburger from "./HeaderHamburger";
 
 //Images
 import logo from "../Assets/Images/logo.png";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const router = useRouter();
+
+  const [scrolled, setScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const goToSignIn = () => {
     router.push("/authentication-portal");
@@ -21,7 +39,13 @@ export default function Header() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full z-10 bg-[rgba(255,255,255,0.8)] backdrop-blur-md pt-2 pb-2">
+      <div
+        className={`fixed top-0 left-0 w-full z-10 transition-all duration-300 ${
+          scrolled
+            ? "bg-white backdrop-blur-md shadow-md"
+            : "bg-transparent backdrop-blur-none"
+        } pt-2 pb-2`}
+      >
         <div className="flex justify-center items-center h-[70px]">
           <div className="flex justify-between w-[90vw] sm:w-[90vw] md:w-[90vw] lg:w-[90vw] xl:w-[60vw] 2xl:w-[60vw]">
             <Image

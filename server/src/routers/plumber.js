@@ -33,30 +33,30 @@ router.get("/plumber/:id", auth, async (req, res) => {
   }
 });
 
-router.get("/plumber", auth, async (req, res) => {
+router.get("/plumber", async (req, res) => {
   const match = {};
   const sort = {};
 
-  if(req.query.jobsCompleted) {
-    match.jobsCompleted = req.query.jobsCompleted
+  if (req.query.jobsCompleted) {
+    match.jobsCompleted = req.query.jobsCompleted;
   }
 
-  if(req.query.sortBy) {
-    const parts = req.query.sortBy.split(':')
-    sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
+  if (req.query.sortBy) {
+    const parts = req.query.sortBy.split(":");
+    sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
   }
 
   try {
-    await req.user.populate({
-      path: "plumber",
-      match,
-      options: {
-        limit: parseInt(req.query.limit) || null,
-        skip: parseInt(req.query.skip) || null,
-        sort
-      }
-    });
-    res.send(req.user.plumber);
+    const plumbers = await Plumber.find(match)
+      .limit(parseInt(req.query.limit) || 0)
+      .skip(parseInt(req.query.skip) || 0)
+      .sort(sort)
+      .select('-createdAt -updatedAt -__v')
+      .populate({
+        path: 'owner', // Path to populate (the `owner` field in the `plumberSchema`)
+        select: 'firstName lastName' // Fields to include from the `userSchema`
+      });
+    res.send(plumbers);
   } catch (e) {
     res.status(500).send();
   }
