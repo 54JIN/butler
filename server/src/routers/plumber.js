@@ -41,6 +41,10 @@ router.get("/plumber", async (req, res) => {
     match.jobsCompleted = req.query.jobsCompleted;
   }
 
+  if (req.query.hourlyChargeMax) {
+    match.hourlyCharge = { $lte: parseInt(req.query.hourlyChargeMax) };
+  }
+
   if (req.query.sortBy) {
     const parts = req.query.sortBy.split(":");
     sort[parts[0]] = parts[1] === "desc" ? -1 : 1;

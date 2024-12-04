@@ -35,8 +35,9 @@ export default function SignIn() {
       });
 
       // Handle success (you can navigate to a different page after successful signup)
+      window.localStorage.setItem("token", JSON.stringify(response.data.token))
       console.log("User Logged In:", response.data);
-      router.push("/dashboard"); // Optional: Redirect to a new page (e.g., a welcome page)
+      router.push("/"); // Optional: Redirect to a new page (e.g., a welcome page)
     } catch (e) {
       const error = e as AxiosError;
       // Handle error with type assertion
@@ -52,7 +53,7 @@ export default function SignIn() {
     }
   };
   
-  const clickHandlerCreateAccount = async () => {
+  const clickHandlerCreateAccount = () => {
       router.push("/signup"); 
   };
 

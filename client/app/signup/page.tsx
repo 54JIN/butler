@@ -43,8 +43,9 @@ export default function SignUp() {
       });
 
       // Handle success (you can navigate to a different page after successful signup)
+      window.localStorage.setItem("token", JSON.stringify(response.data.token))
       console.log("User created successfully:", response.data);
-      router.push("/dashboard"); // Optional: Redirect to a new page (e.g., a welcome page)
+      router.push("/"); // Optional: Redirect to a new page (e.g., a welcome page)
     } catch (e) {
       const error = e as AxiosError;
       // Handle error with type assertion

@@ -13,6 +13,7 @@ export default function Header() {
   const router = useRouter();
 
   const [scrolled, setScrolled] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -27,6 +28,12 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      setLoggedIn(true);
+    }
   }, []);
 
   const goToSignIn = () => {
@@ -58,15 +65,19 @@ export default function Header() {
                 <HeaderHamburger />
               </div>
               <div className="hidden md:flex gap-5 self-center gap-5">
-                <button className="btn text-[#485424]" onClick={goToSignIn}>
-                  Sign up / Log in
-                </button>
-                <button
-                  className="btn bg-[#485424] text-white"
-                  onClick={goToSignUp}
-                >
-                  Become a Contractor
-                </button>
+                {!loggedIn ? (
+                  <button className="btn text-[#485424]" onClick={goToSignIn}>
+                    Sign up / Log in
+                  </button>
+                ) : null}
+                {loggedIn ? (
+                  <button
+                    className="btn bg-[#485424] text-white"
+                    onClick={goToSignUp}
+                  >
+                    Become a Contractor
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>

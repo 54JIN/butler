@@ -1,5 +1,6 @@
 //Libraries
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 //Images
 import profilepic from "../Assets/Images/profilepic.jpg";
@@ -23,6 +24,12 @@ interface ContractorCardProps {
 }
 
 export default function ContractorCard({ contractorData }: ContractorCardProps) {
+  const router = useRouter();
+
+  const handleClickSelect = () => {
+    router.push("/schedule")
+  }
+
   return (
     <div className="flex flex-col w-full sm:w-full md:w-full lg:w-[50vw] xl:w-[40vw] 2xl:w-[30vw] p-4 bg-white border border-gray-200 rounded-lg shadow-sm gap-5">
       <div className="flex gap-5 w-full">
@@ -57,7 +64,7 @@ export default function ContractorCard({ contractorData }: ContractorCardProps) 
       <p className="text-md">
         {contractorData.description}
       </p>
-      <button className="btn btn-primary">Select</button>
+      <button className="btn bg-[#485424] text-white btn-primary" onClick={handleClickSelect}>Select</button>
     </div>
   );
 }

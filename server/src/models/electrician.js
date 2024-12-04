@@ -36,6 +36,10 @@ const electricianSchema = new mongoose.Schema({
             }
         }
     },
+    areaOfService: {
+        type: String,
+        required: true
+    },
     badges: [{
         type: String,
         enum: ['Speedy Responder', 'Top Value']

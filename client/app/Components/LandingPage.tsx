@@ -11,7 +11,7 @@ export default function LandingPage() {
   const router = useRouter();
 
   const handleSearch = (category: string) => {
-    router.push(`/suggestions?${category ? `category=${category}` : ""}`);
+    router.push(`/suggestions?${category ? `category=${category}&sortBy=hourlyCharge%3Aasc` : ""}`);
   };
 
   return (
