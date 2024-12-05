@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 
 export default function Suggestions() {
   const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  const category = searchParams.get("serviceType");
 
   const [contractors, setContractors] = useState([]);
   const [error, setError] = useState(false);
@@ -43,7 +43,7 @@ export default function Suggestions() {
         const queryString = new URLSearchParams(queryParams).toString();
         console.log(queryString)
 
-        const response = await axios.get(`http://localhost:5000/${category}?${queryString}`);
+        const response = await axios.get(`http://localhost:5000/service?serviceType=${category}&${queryString}`);
 
         setContractors(response.data);
 
@@ -67,7 +67,7 @@ export default function Suggestions() {
           <FilterSideBar currentFilters={filters} category={category}/>
         </div>
         <div className="flex flex-col gap-5">
-          {ContractorSuggestions.map((contractor, idx) => {
+          {contractors.map((contractor, idx) => {
             return <ContractorCard contractorData={contractor} key={idx} />;
           })}
         </div>

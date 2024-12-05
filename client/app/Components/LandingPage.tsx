@@ -11,7 +11,7 @@ export default function LandingPage() {
   const router = useRouter();
 
   const handleSearch = (category: string) => {
-    router.push(`/suggestions?${category ? `category=${category}&sortBy=hourlyCharge%3Aasc` : ""}`);
+    router.push(`/suggestions?${category ? `serviceType=${category}&sortBy=hourlyCharge%3Aasc` : ""}`);
   };
 
   return (
@@ -50,13 +50,13 @@ export default function LandingPage() {
               <div className="flex gap-5">
                 <button
                   className="btn btn-outline btn-secondary"
-                  onClick={() => handleSearch("plumber")}
+                  onClick={() => handleSearch("Plumber")}
                 >
                   Plumber
                 </button>
                 <button
                   className="btn btn-outline btn-secondary"
-                  onClick={() => handleSearch("electrician")}
+                  onClick={() => handleSearch("Electrician")}
                 >
                   Electrician
                 </button>

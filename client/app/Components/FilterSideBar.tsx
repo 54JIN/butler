@@ -60,7 +60,7 @@ export default function FilterSideBar({
     );
 
     // Push new URL and refresh the page
-    router.push(`?category=${category}&${query.toString()}`);
+    router.push(`?serviceType=${category}&${query.toString()}`);
   };
 
   const handleChange = (

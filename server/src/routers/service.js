@@ -75,7 +75,16 @@ router.get("/service", async (req, res) => {
     const services = await Service.find(match)
       .limit(parseInt(req.query.limit) || 0)
       .skip(parseInt(req.query.skip) || 0)
-      .sort(sort);
+      .sort(sort)
+      .select("-createdAt -updatedAt -__v -_id -serviceType")
+      .populate({
+        path: "serviceProvider",
+        populate: {
+          path: "user",
+          select: "firstName lastName -_id",
+        },
+        select: 'aboutMe badges'
+      });
 
     res.send(services);
   } catch (e) {
@@ -135,8 +144,8 @@ router.delete("/service/me", auth, async (req, res) => {
   }
   try {
     const service = await Service.findOneAndDelete({
-        serviceProvider: req.user.serviceProviderId,
-        serviceType: req.query.serviceType,
+      serviceProvider: req.user.serviceProviderId,
+      serviceType: req.query.serviceType,
     });
 
     if (!service) {

@@ -7,16 +7,18 @@ import profilepic from "../Assets/Images/profilepic.jpg";
 import starpic from "../Assets/Images/star.svg";
 
 interface ContractorData {
-  owner: {
+  serviceProvider: {
     _id: string;
-    firstName: string;
-    lastName: string;
+    user: {
+      firstName: string;
+      lastName: string;
+    }
+    aboutMe: string;
+    badges: string[];
   };
-  hourlyCharge: string;
+  hourlyCharge: number;
   rating: number;
   jobsCompleted: number;
-  badges: string[];
-  description: string;
 }
 
 interface ContractorCardProps {
@@ -40,7 +42,7 @@ export default function ContractorCard({ contractorData }: ContractorCardProps) 
         />
         <div className="flex flex-col w-full">
           <div className="flex justify-between">
-            <h3 className="text-xl font-semibold">{contractorData.owner.firstName} {contractorData.owner.lastName}</h3>
+            <h3 className="text-xl font-semibold">{contractorData.serviceProvider.user.firstName} {contractorData.serviceProvider.user.lastName}</h3>
             <h3 className="text-xl font-semibold">{contractorData.hourlyCharge}</h3>
           </div>
           <div className="flex items-center gap-1">
@@ -55,14 +57,14 @@ export default function ContractorCard({ contractorData }: ContractorCardProps) 
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-5">
-        {contractorData.badges.map((badge, idx) => {
+        {contractorData.serviceProvider.badges.map((badge, idx) => {
           return (
             <p className="badge badge-md" key={idx}>{badge}</p>
           )
         })}
       </div>
       <p className="text-md">
-        {contractorData.description}
+        {contractorData.serviceProvider.aboutMe}
       </p>
       <button className="btn bg-[#485424] text-white btn-primary" onClick={handleClickSelect}>Select</button>
     </div>
