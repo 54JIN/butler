@@ -12,12 +12,14 @@ app.use(cors());
 
 //Routers
 const userRouter = require('./routers/user')
-const plumberRouter = require('./routers/plumber')
-const electricianRouter = require('./routers/electrician')
+const serviceRouter = require('./routers/service')
+const serviceProviderRouter = require('./routers/serviceProvider')
+const bookingRouter = require('./routers/booking')
 
 //Router Configurations
 app.use(userRouter)
-app.use(plumberRouter)
-app.use(electricianRouter)
+app.use(serviceRouter)
+app.use(serviceProviderRouter)
+app.use(bookingRouter)
 
 module.exports = app

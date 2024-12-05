@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Plumber = require("./plumber");
-const Electrician = require("./electrician");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -63,16 +61,10 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-userSchema.virtual("plumber", {
-  ref: "Plumber",
+userSchema.virtual("serviceProvider", {
+  ref: "ServiceProvider",
   localField: "_id",
-  foreignField: "owner",
-});
-
-userSchema.virtual("electrician", {
-  ref: "Electrician",
-  localField: "_id",
-  foreignField: "owner",
+  foreignField: "user",
 });
 
 userSchema.methods.toJSON = function () {
@@ -123,11 +115,13 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+/* Service and Service Provider does not delete itself when user is removed. */
+
 //Delete user plumber & electrician when user is removed
 userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
   const user = this
-  await Plumber.deleteMany({ owner: user._id })
-  await Electrician.deleteMany({ owner: user._id })
+  // await Plumber.deleteMany({ owner: user._id })
+  // await Electrician.deleteMany({ owner: user._id })
   next()
 })
 
